@@ -12,7 +12,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        admin: 'admin.html',
+        payment: 'payment.html',
       },
     },
   },
@@ -24,9 +24,9 @@ export default defineConfig({
       configureServer(server) {
         return () => {
           server.middlewares.use((req: any, res: any, next: any) => {
-            // Match /tenant/merchant paths and serve index.html
+            // Match /tenant/merchant paths and serve payment.html
             if (req.url && req.url.match(/^\/[^\/\.]+\/[^\/\.]+(\?.*)?$/)) {
-              req.url = '/index.html';
+              req.url = '/payment.html';
             }
             next();
           });
