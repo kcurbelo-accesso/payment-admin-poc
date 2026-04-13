@@ -4,7 +4,7 @@ declare const process: { env: Record<string, string | undefined> };
 
 export default defineConfig({
   appType: 'mpa',
-  base: process.env['GITHUB_PAGES'] ? '/apay-config-poc/' : '/',
+  base: process.env['GITHUB_PAGES'] ? '/payment-admin-poc/' : '/',
   server: {
     middlewareMode: false,
   },
