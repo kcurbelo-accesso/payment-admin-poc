@@ -1,0 +1,843 @@
+{
+  "merchant": {
+    "id": "800",
+    "name": "Merchant Name",
+    "theme": {
+      "primaryColor": "#2E7D32",
+      "secondaryColor": "#66BB6A",
+      "fontFamily": "Roboto",
+      "borderRadius": "8px",
+      "applyLayoutColor": "false"
+    }
+  },
+  "applicationConfigs": [
+    {
+      "id": 417,
+      "name": "accertify_x",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 451,
+      "name": "disable_field_pattern_validationXXX",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 455,
+      "name": "merchant_name",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 456,
+      "name": "optimizely",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 463,
+      "name": "use_payment_auth",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 465,
+      "name": "risk_management",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 460,
+      "name": "recaptchav3",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 461,
+      "name": "rokt",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 453,
+      "name": "hide_creditcard_header",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 457,
+      "name": "payment_admin_urlXXX",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 430,
+      "name": "accertify",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 462,
+      "name": "ticketGuardian",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 454,
+      "name": "loqate",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 458,
+      "name": "payment_method_selection",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 450,
+      "name": "default_phone_code",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 452,
+      "name": "donation",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 449,
+      "name": "default_country_code",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 448,
+      "name": "default_country",
+      "value": "{\"foo\":\"bar\"}"
+    },
+    {
+      "id": 459,
+      "name": "paypal",
+      "value": "{\"foo\":\"bar\"}"
+    }
+  ],
+  "navigation": {
+    "pages": [
+      {
+        "id": "payment",
+        "route": "/payment",
+        "order": 1,
+        "label": "Payment",
+        "enabled": true,
+        "icon": "credit-card",
+        "components": [
+          { "id": "comp_1", "componentType": "donation", "order": 1 },
+          { "id": "comp_2", "componentType": "payment", "order": 2 },
+          { "id": "comp_3", "componentType": "insurance", "order": 3 }
+        ]
+      }
+    ],
+    "currentPageIndex": 0,
+    "allowSkip": false,
+    "showProgress": true
+  },
+  "integrations": [
+    {
+      "id": "int_cybersource_001",
+      "type": "payment",
+      "provider": "Cybersource",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "critical",
+        "blocksRendering": true,
+        "requiredForPages": ["checkout"]
+      },
+      "credentials": {
+        "merchantId": "3"
+      },
+      "settings": {
+        "paymentMethods": {
+          "CCD": [
+            {
+              "cardBrand": "VISA",
+              "cardBrandCode": "VIS",
+              "enabled3ds": true,
+              "displayOrder": 1
+            },
+            {
+              "cardBrand": "MASTERCARD",
+              "cardBrandCode": "MAS",
+              "enabled3ds": false,
+              "displayOrder": 2
+            },
+            {
+              "cardBrand": "AMERICAN EXPRESS",
+              "cardBrandCode": "AME",
+              "enabled3ds": false,
+              "displayOrder": 3
+            },
+            {
+              "cardBrand": "DISCOVER",
+              "cardBrandCode": "DIS",
+              "enabled3ds": false,
+              "displayOrder": 4
+            },
+            {
+              "cardBrand": "DINERS CLUB",
+              "cardBrandCode": "DIN",
+              "enabled3ds": false,
+              "displayOrder": 23
+            }
+          ],
+          "APL": [
+            {
+              "cardBrand": "AMERICAN EXPRESS",
+              "cardBrandCode": "AME",
+              "enabled3ds": false,
+              "displayOrder": 7
+            },
+            {
+              "cardBrand": "DISCOVER",
+              "cardBrandCode": "DIS",
+              "enabled3ds": false,
+              "displayOrder": 8
+            },
+            {
+              "cardBrand": "VISA",
+              "cardBrandCode": "VIS",
+              "enabled3ds": false,
+              "displayOrder": 9
+            },
+            {
+              "cardBrand": "MASTERCARD",
+              "cardBrandCode": "MAS",
+              "enabled3ds": false,
+              "displayOrder": 10
+            }
+          ],
+          "GGL": [
+            {
+              "cardBrand": "AMERICAN EXPRESS",
+              "cardBrandCode": "AME",
+              "enabled3ds": false,
+              "displayOrder": 11
+            },
+            {
+              "cardBrand": "DISCOVER",
+              "cardBrandCode": "DIS",
+              "enabled3ds": false,
+              "displayOrder": 12
+            },
+            {
+              "cardBrand": "VISA",
+              "cardBrandCode": "VIS",
+              "enabled3ds": false,
+              "displayOrder": 13
+            },
+            {
+              "cardBrand": "MASTERCARD",
+              "cardBrandCode": "MAS",
+              "enabled3ds": false,
+              "displayOrder": 14
+            }
+          ]
+        },
+        "ignoreAvs": false,
+        "ignoreCvv": false
+      },
+      "usedBy": {
+        "components": ["comp_payment_001"],
+        "pages": ["checkout"]
+      }
+    },
+    {
+      "id": "int_storedvalue_001",
+      "type": "payment",
+      "provider": "GiftCard",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "critical",
+        "blocksRendering": true,
+        "requiredForPages": ["checkout"]
+      },
+      "credentials": {
+        "merchantId": "3"
+      },
+      "settings": {
+        "paymentMethods": {
+          "SVC": [
+            {
+              "cardBrand": "STORED VALUE CARD",
+              "cardBrandCode": "SVC",
+              "enabled3ds": false,
+              "displayOrder": 24
+            }
+          ]
+        },
+        "ignoreAvs": false,
+        "ignoreCvv": false
+      },
+      "usedBy": {
+        "components": ["comp_payment_001"],
+        "pages": ["checkout"]
+      }
+    },
+    {
+      "id": "int_paypal_001",
+      "type": "payment",
+      "provider": "PayPal",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "critical",
+        "blocksRendering": true,
+        "requiredForPages": ["checkout"]
+      },
+      "credentials": {
+        "clientId": "some_api_key"
+      },
+      "settings": {
+        "fundingSources": [
+          {
+            "source": "paypal",
+            "style": {
+              "color": "gold",
+              "label": "checkout"
+            }
+          },
+          {
+            "source": "paylater"
+          },
+          {
+            "source": "venmo"
+          }
+        ]
+      },
+      "usedBy": {
+        "components": ["comp_payment_001"],
+        "pages": ["checkout"]
+      }
+    },
+    {
+      "id": "int_accertify_001",
+      "type": "fraud-detection",
+      "provider": "Accertify",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "prefetch",
+        "blocksRendering": false,
+        "requiredForPages": ["checkout"]
+      },
+      "credentials": {
+        "clientId": "some_api_key"
+      },
+      "settings": {},
+      "usedBy": {
+        "components": ["comp_payment_001"],
+        "pages": ["checkout"]
+      }
+    },
+    {
+      "id": "int_risk_001",
+      "type": "fraud-detection",
+      "provider": "RiskManagement",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "lazy",
+        "blocksRendering": false,
+        "requiredForPages": []
+      },
+      "credentials": {
+        "clientId": "some_api_key"
+      },
+      "settings": {},
+      "usedBy": {
+        "components": [],
+        "pages": ["checkout"]
+      }
+    },
+    {
+      "id": "int_ticketguardian_001",
+      "type": "insurance",
+      "provider": "TicketGuardian",
+      "enabled": true,
+      "initStrategy": {
+        "timing": "prefetch",
+        "blocksRendering": false,
+        "requiredForPages": ["insurance"]
+      },
+      "credentials": {
+        "apiKey": "some_api_key"
+      },
+      "settings": {
+        "splitInsurance": false
+      },
+      "usedBy": {
+        "components": ["comp_insurance_001"],
+        "pages": ["insurance"]
+      }
+    }
+  ],
+  "locales": {
+    "locale": "en-US",
+    "namespaces": {
+      "insurance": {
+        "title": "Ticket Protection"
+      },
+      "nectarpoints": {
+        "addcard": "Add Nectar card",
+        "unlinkconfirm": "Are you sure you want to unlink your Nectar card?",
+        "icon": "Nectar logo",
+        "error": "Error adding Nectar card. Please try again later.",
+        "title": "Use your Nectar Points",
+        "optionlabel": "@@amount (@@points points)",
+        "selectamount": "Choose amount to spend",
+        "appliedbalance": "@@amount (@@points points)",
+        "balance": "Balance: @@amount (@@points points)",
+        "unlink": "Unlink",
+        "authenticating": "Adding Nectar card...",
+        "cardending": "Nectar Account **** @@cardnumber",
+        "subtitle": "Add your Nectar account to spend points"
+      },
+      "select": {
+        "editpayments": "Edit Saved Payment Methods",
+        "error": "Please select a payment method to complete your purchase",
+        "title": "Choose your payment method",
+        "storedpayments": "Saved Payment Methods"
+      },
+      "voucher": {
+        "addvoucher": "Add voucher",
+        "limitreached": "Amount of Vouchers that can be applied has been reached. Please use another payment method to complete purchase.",
+        "title": "Tesco Voucher"
+      },
+      "CrossSellHList": {
+        "header_103": "Add on to your experience..."
+      },
+      "express": {
+        "continue": "Standard Checkout"
+      },
+      "giftcardsummary": {
+        "appliedbalance": "Applied gift cards",
+        "remainingbalance": "Remaining balance",
+        "selectpay": "Select \"Pay\" to complete purchase",
+        "giftcardlabel": "Gift Card @@number",
+        "selectcontinue": "Select \"Continue\" to complete purchase",
+        "selectpaymentmethod": "Select payment method to complete purchase"
+      },
+      "mobiledelivery": {
+        "title": "Purchaser information",
+        "description": "Used for both order delivery and billing information."
+      },
+      "cart": {
+        "insurance": "Insurance",
+        "fees": "Fee",
+        "total": "Total",
+        "deliveryfee": "Delivery fee",
+        "subtotal": "Subtotal",
+        "taxes": "Taxes",
+        "itemcount": "@@count items",
+        "title": "Order summary",
+        "processingfee": "Processing fee",
+        "returntocart": "Shopping cart"
+      },
+      "billing": {
+        "applepay": "Apple Pay",
+        "voucher": "Voucher",
+        "klarnapaynow": "Pay now with Klarna",
+        "bancontactdesktop": "Bancontact Card",
+        "tescovoucher": "Tesco Voucher",
+        "tesco": "Tesco",
+        "paypal": "Checkout",
+        "paypaltitle": "Paypal",
+        "alipay": "AliPay",
+        "ideal": "iDeal",
+        "wechatpayqr": "WeChat Pay QR",
+        "uplift": "Uplift",
+        "giftcard": "Gift Card",
+        "koreancyberpayments": "KCP",
+        "trustly": "Pay by Bank",
+        "brandSelection": "Choose card brand to pay",
+        "googlepay": "Google Pay",
+        "amazonpay": "Amazon Pay",
+        "creditcard": "Credit Card",
+        "venmo": "Venmo",
+        "useshippingaddress": "Use shipping address as billing address",
+        "alipayhk": "AliPay Hong Kong",
+        "bancontactmobile": "Payconiq by Bancontact",
+        "klarnapayovertime": "Pay over time with Klarna",
+        "kakaopay": "Kakao Pay"
+      },
+      "tesco": {
+        "voucher": "Voucher code",
+        "voucherused": "Voucher code has already been used.",
+        "addsuccess": "Voucher code successfully applied",
+        "balancecovered": "Voucher could not be applied, applicable item balance is already covered by other payment methods",
+        "getbalancefailure": "Failed to apply Tesco club card voucher, please try again.",
+        "title": "Add a Tesco club card voucher"
+      },
+      "app": {
+        "title": "Accesso Pay"
+      },
+      "ideal": {
+        "instructions": "Select your bank and click continue to pay at the bank via iDEAL.",
+        "bank": "Bank",
+        "selectbank": "Select bank"
+      },
+      "wechatpayqr": {
+        "scan": "Scan QR code to complete payment",
+        "componenterror": "Error creating QR component. Please try again later.",
+        "timetopay": "You have %@ to complete your payment",
+        "paymenterror": "Payment Failed"
+      },
+      "uplift": {
+        "payinfulldescription": "Pay in full today.",
+        "contentblockerinfo": "Turn off content blockers for the best Flex Pay experience.",
+        "payinfull": "Pay In Full",
+        "heading": "Choose Payment Option",
+        "paymonthlydescription": "Use a flexible pay plan with Uplift.",
+        "paymonthlytitle": "Uplift Pay Monthly",
+        "duetoday": "Due today",
+        "payinfulltitle": "Pay In Full",
+        "installments": "@@number payments plus todays payment",
+        "paymonthly": "Pay monthly",
+        "permonth": "/month",
+        "from": "from",
+        "paymonthlyunavailable": "Unavailable"
+      },
+      "altpayerror": {
+        "ec_0": "An unknown error occured. Please try again.",
+        "refused": "The transaction was refused by your bank or creditor. Please use a different payment method.",
+        "be_503": "An error occured while attempting to contact our payment service. Please try again later.",
+        "be_504": "A gateway timeout occured while attempting to contact our payment service. Please try again later.",
+        "failed": "The transaction failed. Please try again or use a different payment method.",
+        "be_502": "An error occured while attempting to contact our payment service. Please try again later.",
+        "be_500": "A internal error occured while attempting to contact our payment service. Please try again later.",
+        "initiatefailure": "Failed to initialize the payment. Please try again or choose a different payment method.",
+        "ec_5": "An error occured in our payment system. Please try again later.",
+        "ec_4": "A system exception occured. Please try again later.",
+        "ec_3": "A redirect URL was not provided in the accesso Pay configuration.",
+        "ec_2": "The payment processor failed to send the required data. Please try again.",
+        "ec_1": "An error occured while attempting to connect to our payment service. We are aware and are looking into the issue. Please try again later."
+      },
+      "googlepay": {
+        "developer_error": "We have experienced technical difficulties. Please choose a different payment method.",
+        "unknown_error": "We have experienced technical difficulties. Please choose a different payment method or try again.",
+        "redirectfailure": "Payment Failed!",
+        "heading": "Google Pay",
+        "buyer_account_error": "Error retrieving payment information. Please choose a different payment method or try again.",
+        "confirmredirect": "The payment method you chose requires us to redirect you to their website to complete your payment. Once you're done, they will redirect you back to this page.",
+        "internal_error": "We have experienced technical difficulties. Please choose a different payment method or try again.",
+        "description": "Initiating Google Pay transaction...",
+        "merchant_account_error": "There is an error with the merchant account. Please choose a different payment method."
+      },
+      "expresscheckout": {
+        "cardfooter": "or",
+        "cardheader": "Express Payments",
+        "continue": "Continue to payments"
+      },
+      "userdetails": {
+        "title": "Your information"
+      },
+      "vouchersummary": {
+        "appliedbalance": "Applied vouchers"
+      },
+      "invalid": {
+        "heading": "The URL you went to was invalid",
+        "description": "If you typed the URL, please ensure it contains all the correct information. If you came from another website or email, contact the website administrator to get a correct URL."
+      },
+      "page": {
+        "insurance": "Insurance",
+        "delivery": "Delivery",
+        "purchaserinfo": "Purchaser info",
+        "paymentplan": "Payment plans",
+        "userdetails": "Your details",
+        "payment": "Payment",
+        "mobiledelivery": "Purchaser info"
+      },
+      "redirectinfo": {
+        "description": "Please scan the Qr Code to complete the payment, once it is proccessed click Continue",
+        "pollTimeout": "QR Code Scan Timed Out",
+        "redirectfailure": "There was an error updating the payment status",
+        "title": "Payment Redirect Info!"
+      },
+      "paymentmethod": {
+        "title": "Payment method",
+        "subtitle": "Transactions are secured and encrypted"
+      },
+      "applepay": {
+        "description": "Initiating Apple Pay transaction...",
+        "redirectfailure": "Payment Failed!",
+        "heading": "Apple Pay"
+      },
+      "footer": {
+        "help": "",
+        "privacy": "Privacy",
+        "terms": "Terms"
+      },
+      "qrcode": {
+        "qrcodedownloadtext": "Download QR code image",
+        "qrcodemobileinstructions": "<ol><li>Download QR Code to your photos, or take Screenshot of QR Code.</li><li>Open your TTB app.</li><li>Upload QR Code to TTB app to finish payment.</li></ol>",
+        "qrcodeinstructions": "<ol><li>Scan QR Code to pay in your TTB app.</li><li>Follow all instructions and Complete Payment in TTB app.</li><li>Once submitted on TTB app, click the Submit button. You will receive a follow up email with your authorization status.</li></ol><div>Note: Do NOT navigate away from this page while completing payment in TTB app. If you would like to Cancel payment, close out TTB app AND close out this QR code screen by selecting \"Back\" below.</div>",
+        "paymentsubmit": "Submit"
+      },
+      "session": {
+        "heading": "Session Unavailable",
+        "description": "Your session has expired or was not provided. Please go back and try again."
+      },
+      "extras": {
+        "donationsubtitle": "",
+        "mincustomdonationerrorinput": "Minimum custom amount for donation is @@minDonationAmt",
+        "maxcustomdonationerrorinput": "Maximum donation: @@maxDonationAmount",
+        "donationinputerror": "Enter a valid amount",
+        "maxcustomdonationerrormodal": "Custom donation amount is more than max donation amount. Please remove donation or input another amount to continue.",
+        "donationcustom": "Custom",
+        "donationroundby": "Round up to nearest pound: @@amount",
+        "donationinputlabel": "Enter custom amount",
+        "donationtitle": "Donation",
+        "tgerror": "We are experiencing temporary technical difficulties and are unable to issue ticket protection at this time. <br/> <br/> We apologize for the inconvenience.",
+        "ticketprotectionheader": "Ticket Protection",
+        "minmaxcustomdonationerrorinput": "Minimum doation: @@minDonationAmount and Maximum donation: @@maxDonationAmount",
+        "donationround": "Round up to a dollar :",
+        "mincustomdonationerrormodal": "Custom donation amount is less than minimum donation amount. Please remove donation or input another amount to continue.",
+        "setupfailure": "An error occurred while generating ticket protection. (E:SU-APIKEY)",
+        "invalidticketprotectionselection": "Invalid selection. Please choose an option for ticket protection."
+      },
+      "walletmanagement": {
+        "remove": "Are you sure you want to remove this saved payment method"
+      },
+      "error": {
+        "invalidfirstname": "First Name can only contain letters",
+        "minlength": "Minimum length: @@len",
+        "numericpositive": "Negative numbers are not allowed",
+        "maxdate": "Maximum date: @@date",
+        "maxlength": "Maximum length: @@len",
+        "pattern": "Invalid field",
+        "numeric": "Only numbers are allowed",
+        "fieldrequired": "Required",
+        "zipcode": "Invalid zip code",
+        "zipcode_match": "Zip/Postal doesn't match country: @@match",
+        "mindate": "Minimum date: @@date",
+        "invalidcity": "Only alphanumeric and ()- characters are allowed.",
+        "maxage": "Must be younger than @@age",
+        "minage": "Must be at least @@age",
+        "maximum": "Maximum: @@max",
+        "incompletebillingAddress": "Billing details invalid. Please amend and try again.",
+        "invalidlastname": "Last Name can only contain letters",
+        "minimum": "Minimum: @@min",
+        "email": "Invalid email address",
+        "emailmatch": "Email addresses do not match"
+      },
+      "paymentmanagement": {
+        "replacepayment": "Replace Payment",
+        "selectiontitle": "Replace Payment Method"
+      },
+      "common": {
+        "cancel": "Cancel",
+        "select": "Select",
+        "year": "Year",
+        "middleinitial": "MI",
+        "continue": "Continue",
+        "telCode": "Country Code",
+        "pincodetooltipcontent": "The pin code found on the back of your card, on the right side.",
+        "day": "Day",
+        "zip": "Zip/Postal Code",
+        "edit": "Edit",
+        "dismiss": "Dismiss",
+        "finalizepurchase": "Finalize Purchase",
+        "pay": "Pay Now",
+        "emailaddress": "Email",
+        "cvvlen3tooltipheader": "Visa, Mastercard, Discover and others",
+        "lastname": "Last name",
+        "creditcardplaceholder": "4242 4242 4242 4242",
+        "month": "Month",
+        "phone": "Phone Number",
+        "emailConf": "Confirm Email",
+        "paymentdetails": "Payment Details",
+        "creditcardnumber": "Card number",
+        "firstname": "First name",
+        "cvvlen4tooltipcontent": "The 4 digit code found on the front of your card, on the right side.",
+        "back": "Back",
+        "delete": "Delete",
+        "paymentcompletedescription": "Your payment is complete, click on Finalize Purchase to complete your purchase. DO NOT click on close or back button.",
+        "paywith": "Pay with",
+        "remove": "Remove",
+        "cvvlen4tooltipheader": "American Express",
+        "pincodetooltipheader": "Gift card pin code",
+        "total": "Total",
+        "goto": "Go to @@pagetitle",
+        "cvvlen3tooltipcontent": "The 3 digit code usually found on the back of your card.",
+        "paymentcompletetitle": "Payment Complete",
+        "close": "Close",
+        "email": "Email Address",
+        "saveandpay": "Save and Pay",
+        "cvv": "CVV",
+        "apply": "Apply",
+        "expirationdate": "Exp. (MM/YY)",
+        "billingheader": "Details",
+        "creditcard": "Credit Card",
+        "confirm": "Confirm",
+        "whatismycvv": "What's my CVV?",
+        "authorizing": "Authorizing",
+        "continueto": "Continue to @@label",
+        "authorizingnotice": "Your payment is being authorized. Please do not close this window or click the Back button on your browser until this is complete."
+      },
+      "notfound": {
+        "heading": "Page Not Found",
+        "description": "We can't seem to find the page you're looking for."
+      },
+      "recaptcha": {
+        "loadingerror": "reCAPTCHA service failed. Please adjust your content-blocker settings and retry purchase.",
+        "recaptchav3notice": "This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\" target=\"_blank\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\" target=\"_blank\">Terms of Service</a> apply."
+      },
+      "redirecterror": {
+        "ec_0": "An unknown error occurred. Please try again.",
+        "refused": "The transaction was refused by your bank or creditor. Please use a different payment method.",
+        "be_503": "An error occurred while attempting to contact our payment service. Please try again later.",
+        "be_504": "A gateway timeout occurred while attempting to contact our payment service. Please try again later.",
+        "failed": "The transaction failed. Please try again or use a different payment method.",
+        "be_502": "An error occurred while attempting to contact our payment service. Please try again later.",
+        "be_500": "An internal error occurred while attempting to contact our payment service. Please try again later.",
+        "initiatefailure": "Failed to initialize the payment. Please try again or choose a different payment method.",
+        "ec_5": "An error occurred in our payment system. Please try again later.",
+        "ec_4": "A system exception occurred. Please try again later.",
+        "ec_3": "A redirect URL was not provided in the accesso Pay configuration.",
+        "ec_2": "The payment processor failed to send the required data. Please try again.",
+        "ec_1": "An error occurred while attempting to connect to our payment service. We are aware and are looking into the issue. Please try again later."
+      },
+      "termsandcondition": {
+        "termsofuse": "terms of use",
+        "privacyandtermsstatement": "By proceeding, I have read and understand the @@privacystatement  and  @@termsofuse",
+        "privacystatement": "privacy policy"
+      },
+      "zerovalue": {
+        "title": "Enter your information to receive your order",
+        "continue": "Complete Purchase"
+      },
+      "paypal": {
+        "setupfailure": "Invalid PayPal configuration. (E:SU)",
+        "invalidorderstatus": "Unexpected PayPal order status. Please contact technical support.",
+        "billingagreement": "Billing Agreement",
+        "internalerror": "We have experienced technical difficulties. Please choose a different payment method or try again."
+      },
+      "errorcode": {
+        "100": "The credit card was declined by the issuer. Please try a different card or choose a different payment method.",
+        "102": "The credit card was declined by the issuer as your address information does't match what they have on file. Please ensure all your information is correct and try again or choose a different payment method.",
+        "107": "The credit card was declined as it's an invalid card number. Ensure the information entered is correct and try again or choose a different payment method.",
+        "117": "Card verification failed. Please ensure you entered the correct information and try again.",
+        "120": "An error occured. Please verify you have entered correct information and try again. If the error continues, please use a different payment method.",
+        "7711": "Your cart total is less than the allowed limit for AfterPay payments. Please choose another payment method to proceed",
+        "7712": "Your cart total is more than the allowed limit for AfterPay payments. Please choose another payment method to proceed",
+        "7719": "The selected region is not supported with this payment method. Please select another Country or use a separate payment method to proceed.",
+        "7720": "Zip does not match voucher.",
+        "undefined": "We had an internal server error. Please try again or choose a different payment method."
+      },
+      "delivery": {
+        "mobiledescription": "Used for both order delivery and billing information.",
+        "incomplete": "Missing required fields for shipping information. Please complete all sections before proceeding.",
+        "mobiletitle": "Contact information",
+        "copytobilling": "Copy to billing",
+        "header": "Choose Delivery Option",
+        "deliveryaddress": "Shipping Address",
+        "selectiontitle": "Delivery method"
+      },
+      "address": {
+        "country": "Country",
+        "state": "State/Province",
+        "address2": "Apt, Suite, Building",
+        "city": "City/Region",
+        "address1": "Address"
+      },
+      "wallet": {
+        "cvvplaceholder": "CVV",
+        "cvvinfo": "For most cards, the CVV (or CVV2) is located on the back of the card.<br><br><div style=\\text-align:center;\\\"><img src=\\\"https://assets.accessocdn.com/assets/accesso/credit-card-back.png\\\"><br></div><br>For others such as American ExpressÂ® it's located on the front.<br><div style=\\\"text-align:center;\\\"><img src=\\\"https://assets.accessocdn.com/assets/accesso/credit-card-front.png\\\"></div>\"",
+        "internalrerror": "We had an internal server error. Please try again or choose a different payment method.",
+        "031": "Visa Delta",
+        "033": "Visa Electron",
+        "034": "Dankort",
+        "036": "Cartes Bancaires",
+        "037": "Carta Si",
+        "mc": "MasterCard",
+        "discover": "Discover",
+        "040": "UATP",
+        "storedpayments": "Modify Saved Payments",
+        "042": "Maestro Intl.",
+        "deletefailure": "We were unable to delete your stored payment. Please try again or check back later.",
+        "001": "Visa",
+        "002": "MasterCard",
+        "003": "American Express",
+        "004": "Discover",
+        "005": "Diners Club",
+        "006": "Carte Blanche",
+        "007": "JCB",
+        "jcb": "JCB",
+        "noitems": "You have no stored payments.",
+        "050": "Hipercard",
+        "051": "Aura",
+        "053": "Orico House",
+        "054": "ELO",
+        "014": "EnRoute",
+        "internalerror": "We have experienced technical difficulties. Please choose a different payment method or try again.",
+        "061": "Rupay",
+        "062": "UnionPay",
+        "021": "JAL",
+        "024": "Maestro UK",
+        "amex": "American Express",
+        "027": "Nicos House Card",
+        "paymentdeclined": "Your payment was declined. Please choose a different payment method or try again.",
+        "visa": "Visa",
+        "expireson": "Expires on @@date"
+      },
+      "giftcard": {
+        "giftcardcoverspaymentwithdonationerror": "Please add another Payment Method to process transaction, or remove Donation and Try Again.",
+        "preauthfailed": "Gift Card authorization failed. Please try again later.",
+        "currencyMismatch": "Currency of Gift Card does not match currency store is using. Gift Card cannot be applied. Please use another payment method.",
+        "apply": "Apply",
+        "nobalance": "Gift Card is out of balance. Please try a different gift card.",
+        "getbalancefailure": "Failed to fetch balance for Gift Card. Please try again later.",
+        "invalidgiftcard": "The Gift Card you have entered is invalid. Please enter a valid Gift Card",
+        "pincodeplaceholder": "Pin code",
+        "availablebalance": "Available balance:",
+        "limitreached": "Amount of Gift Cards that can be applied has been reached. Please use another payment method to complete purchase.",
+        "addsuccess": "Gift card successfully applied",
+        "addgiftcard": "Add Gift Card",
+        "placeholder": "Gift card"
+      },
+      "purchaserdetails": {
+        "add": "Add purchaser information",
+        "description": "Used for both order delivery and billing information.",
+        "incomplete": "Purchaser information invalid. Please amend and try again.",
+        "title": "Purchaser information"
+      },
+      "trustly": {
+        "expandedinstructioninfo": "After clicking \"Pay by Bank\", you will be redirected to Trustly to complete your purchase securely."
+      },
+      "creditcard": {
+        "cybsjwtfailure": "An error occured generating the credit card form. Please choose a different payment method. (E:JWT)",
+        "setuperror": "An error occured generating the credit card form. Please choose a different payment method. (E:SU)",
+        "expiryempty": "MM / YY",
+        "invalid_data": "Invalid credit card information.",
+        "addcardtitle": "Credit / Debit Card",
+        "expiry": "Expiry",
+        "quotaexceeded": "You have exceeded the maximum attempts. Please re-enter your credit card number",
+        "jwkfailure": "An error occurred while generating the credit card form. Please choose a different payment method or try again.(E:JWT)",
+        "internalerror": "We have experienced technical difficulties. Please choose a different payment method or try again.",
+        "addcard": "Add card",
+        "saveandpay": "Save Card & Pay",
+        "redirectfailure": "Failed to initialize the payment. Please try again or choose a different payment method.",
+        "tokenfailure": "There was an error while attempting to tokenize your credit card. Please try again or choose a different payment method.",
+        "confirmredirect": "The payment method you chose requires us to redirect you to their website to complete your payment. Once you're done, they will redirect you back to this page.",
+        "addmultiplecarderror": "Only one Credit/Debit Card can be used at a time. Please 'Remove' current card to add another.",
+        "componenterror": "Error creating 3DS2 component. Please try again later.",
+        "unknownresponsecode": "Response code unknown. Please choose a different payment method or try again.",
+        "billingdetails": "Billing information",
+        "notsupported": "@@card is not supported",
+        "decryptionerror": "There was an error with your card. Please check your card details and try again.",
+        "sessionexpired": "Your credit card session has expired. Please re-enter your credit card number.",
+        "savecard": "Save card for future purchases",
+        "mmyy": "MM/YY",
+        "invalid": "Invalid credit card",
+        "setupfailure": "An error occurred while generating the credit card form. Please choose a different payment method or try again. (E:SU)",
+        "header": "Credit or Debit Card",
+        "updateresultfailure": "Failed to update the payment result. Please choose a different payment method or try again.",
+        "carddetails": "Card details"
+      },
+      "Billing": {
+        "authorizingnotice": "Your payment is being authorized. Please do not close this window or click the Back button on your browser until this is complete."
+      },
+      "alternatepayment": {
+        "invalidqrdata": "Invalid QR data. Please choose a different payment method or try again.",
+        "account_holder_name_placeholder": "Account Name",
+        "confirmredirect": "The payment method you chose requires us to redirect you to their website to complete your payment. Once you're done, they will redirect you back to this page.",
+        "invalidoriginkey": "An error occured during setup. Please choose a different payment method. (E:ORG_K)",
+        "iban_number_placeholder": "IBAN",
+        "invalidadyenpaymentmethodresponse": "An error occured during setup. Please choose a different payment method. (E:A_PMR)",
+        "internalerror": "We have experienced technical difficulties. Please choose a different payment method or try again."
+      }
+    }
+  }
+}
