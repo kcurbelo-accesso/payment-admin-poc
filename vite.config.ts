@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite';
 
+declare const process: { env: Record<string, string | undefined> };
+
 export default defineConfig({
   appType: 'mpa',
+  base: process.env['GITHUB_PAGES'] ? '/apay-config-poc/' : '/',
   server: {
     middlewareMode: false,
   },
