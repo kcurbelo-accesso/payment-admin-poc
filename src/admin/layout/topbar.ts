@@ -1,4 +1,5 @@
 import { MOCK_STACKS, getMerchantsForTenant, getMerchantsForStack, getMerchantById, getTenantsForStack, getStackById } from '../data/mock';
+import { APP_REGISTRY, buildPreviewUrl } from '../data/appRegistry';
 import { store } from '../services/store';
 import { ROUTES, getRoute } from '../router';
 import { DEPLOYMENT_MODE } from '../config';
@@ -176,9 +177,11 @@ export function renderTopbar(container: HTMLElement): void {
 
     const previewBtn = container.querySelector<HTMLButtonElement>('#topbar-preview-btn');
     previewBtn?.addEventListener('click', () => {
-      if (state.activeMerchantId) {
+      if (state.activeMerchantId && state.activeTenantId) {
         store.applyPreview();
-        const url = `/${state.activeTenantId}/${state.activeMerchantId}`;
+        // Default to first active app in registry — scalable for future apps
+        const app = APP_REGISTRY.find((a) => a.status === 'active') ?? APP_REGISTRY[0];
+        const url = buildPreviewUrl(app, state.activeTenantId, state.activeMerchantId);
         window.open(url, '_blank');
       }
     });

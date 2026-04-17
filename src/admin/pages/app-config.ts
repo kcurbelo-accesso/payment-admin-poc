@@ -8,16 +8,27 @@ import {
   toggleFeature,
   type PaymentFeatureFieldDef,
 } from '../data/paymentFeatures';
+import { APP_REGISTRY } from '../data/appRegistry';
+import {
+  MOCK_TENANT_LOCALES,
+  MOCK_MERCHANT_LOCALE_OVERRIDES,
+  LOCALE_SECTIONS,
+  SUPPORTED_LANGUAGES,
+  getLanguagesForSection,
+} from '../data/mockLocales';
 import { navigate } from '../router';
 import { store } from '../services/store';
 
 const ALL_PAGE_IDS = ['insurance', 'pay-monthly', 'payment'] as const;
 const PAGE_ORDER: Record<string, number> = { insurance: 1, 'pay-monthly': 2, payment: 3 };
 
-type OutputTab = 'json' | 'preview' | 'changes' | 'history';
+type OutputTab = 'json' | 'preview' | 'changes' | 'history' | 'locales';
 
 let activeOutputTab: OutputTab = 'json';
 let previewPageRoute = '';
+let activeAppId = APP_REGISTRY[0]?.id ?? '1504';
+let localeSection = LOCALE_SECTIONS[0];
+let localeLanguage = 'en-US';
 const originalConfigs: Record<string, MerchantConfig> = {};
 
 function deepClone<T>(obj: T): T {
@@ -641,6 +652,85 @@ function renderCheckoutMockup(config: MerchantConfig, selectedRoute: string): st
     </div>`;
 }
 
+function renderAppSelector(): string {
+  let html = '';
+  for (let i = 0; i < APP_REGISTRY.length; i++) {
+    const app = APP_REGISTRY[i];
+    const active = app.id === activeAppId;
+    const borderColor = active ? app.color : '#e2e8f0';
+    const bgColor = active ? app.color + '18' : 'white';
+    const textColor = active ? app.color : '#64748b';
+    const fontWeight = active ? '700' : '500';
+    const plannedBadge = app.status === 'planned'
+      ? '<span style="font-size:9px;background:#f1f5f9;color:#94a3b8;padding:1px 5px;border-radius:4px">planned</span>'
+      : '';
+    html += '<button data-app-id="' + app.id + '" style="'
+      + 'display:flex;align-items:center;gap:6px;'
+      + 'padding:5px 12px;border-radius:999px;border:1px solid ' + borderColor + ';'
+      + 'background:' + bgColor + ';'
+      + 'color:' + textColor + ';'
+      + 'font-size:12px;font-weight:' + fontWeight + ';'
+      + 'cursor:pointer;font-family:inherit;transition:all 0.15s;'
+      + '">'
+      + '<span style="width:6px;height:6px;border-radius:50%;background:' + app.color + ';flex-shrink:0"></span>'
+      + app.name
+      + '<span style="font-size:10px;opacity:0.7;font-family:monospace">' + app.id + '</span>'
+      + plannedBadge
+      + '</button>';
+  }
+  return html;
+}
+
+function renderLocalesTab(tenantId: string, merchantId: string): string {
+  const availableLangs = getLanguagesForSection(activeAppId, localeSection);
+  const effectiveLang = availableLangs.includes(localeLanguage) ? localeLanguage : (availableLangs[0] ?? 'en');
+  const baseKeys = MOCK_TENANT_LOCALES.filter(
+    (l) => l.application_id === activeAppId && l.section === localeSection && l.language === effectiveLang
+  );
+  const overrides = MOCK_MERCHANT_LOCALE_OVERRIDES.filter(
+    (l) => l.merchantId === merchantId && l.application_id === activeAppId && l.section === localeSection && l.language === effectiveLang
+  );
+  const overrideMap = new Map(overrides.map((o) => [o.target, o.value]));
+
+  const sectionOptions = LOCALE_SECTIONS.map((s) => {
+    const sel = s === localeSection ? ' selected' : '';
+    return '<option value="' + s + '"' + sel + '>' + s + '</option>';
+  }).join('');
+
+  const langOptions = SUPPORTED_LANGUAGES
+    .filter((l) => availableLangs.includes(l.code))
+    .map((l) => {
+      const sel = l.code === effectiveLang ? ' selected' : '';
+      return '<option value="' + l.code + '"' + sel + '>' + l.label + '</option>';
+    }).join('');
+
+  const headerRow = '<div style="display:grid;grid-template-columns:130px 1fr 1fr;gap:8px;padding:6px 8px;font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid #e2e8f0"><span>Key</span><span>Tenant value</span><span>Merchant override</span></div>';
+
+  const keyRows = baseKeys.map((row) => {
+    const override = overrideMap.get(row.target);
+    const bg = override ? 'background:#f0fdf4;border:1px solid #bbf7d0' : 'background:transparent;border:1px solid transparent';
+    const overrideCell = override
+      ? '<div><div style="font-size:12px;color:#15803d;font-weight:600;line-height:1.4">' + override + '</div><div style="font-size:10px;color:#4ade80;margin-top:1px">Overridden</div></div>'
+      : '<span style="font-size:11px;color:#cbd5e1;font-style:italic">—</span>';
+    return '<div style="display:grid;grid-template-columns:130px 1fr 1fr;gap:8px;align-items:start;padding:8px;border-radius:6px;' + bg + '">'
+      + '<span style="font-size:10px;font-family:monospace;color:#475569;padding-top:2px">' + row.target + '</span>'
+      + '<span style="font-size:12px;color:#64748b;line-height:1.4">' + row.value + '</span>'
+      + overrideCell
+      + '</div>';
+  }).join('');
+
+  const tableHtml = baseKeys.length === 0
+    ? '<div style="text-align:center;padding:40px 20px;color:#94a3b8;font-size:13px">No locale keys found for this section and language.</div>'
+    : '<div style="display:flex;flex-direction:column;gap:4px">' + headerRow + keyRows + '</div>';
+
+  return '<div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">'
+    + '<select id="locale-section-select" class="form-input" style="font-size:12px;padding:5px 8px;width:140px">' + sectionOptions + '</select>'
+    + '<select id="locale-lang-select" class="form-input" style="font-size:12px;padding:5px 8px;width:160px">' + langOptions + '</select>'
+    + '<span style="font-size:11px;color:#94a3b8;margin-left:4px">App ' + activeAppId + ' \xB7 ' + tenantId + '</span>'
+    + '</div>'
+    + tableHtml;
+}
+
 function renderOutputPanel(panelEl: HTMLElement, config: MerchantConfig, merchantId: string) {
   const original = originalConfigs[merchantId];
   const diffs = original ? buildDiff(original, config) : [];
@@ -650,9 +740,9 @@ function renderOutputPanel(panelEl: HTMLElement, config: MerchantConfig, merchan
     <div style="display: flex; flex-direction: column; height: 100%;">
       <!-- Tab bar -->
       <div class="tab-bar" style="padding: 0 16px; flex-shrink: 0; border-bottom: 1px solid #e8edf3;">
-        ${(['json', 'preview', 'changes', 'history'] as OutputTab[])
+        ${(['json', 'preview', 'changes', 'history', 'locales'] as OutputTab[])
           .map((tab) => {
-            const labels: Record<OutputTab, string> = { json: 'JSON', preview: 'Preview', changes: 'Changes', history: 'History' };
+            const labels: Record<OutputTab, string> = { json: 'JSON', preview: 'Preview', changes: 'Changes', history: 'History', locales: 'Locales' };
             const badge =
               tab === 'changes' && diffs.length > 0
                 ? `<span style="background:#fee2e2;color:#b91c1c;border-radius:10px;font-size:10px;padding:1px 6px;margin-left:4px;">${diffs.length}</span>`
@@ -722,7 +812,8 @@ function renderOutputPanel(panelEl: HTMLElement, config: MerchantConfig, merchan
           `
           }
         `
-                : `
+                : activeOutputTab === 'history'
+                  ? `
           <!-- History tab -->
           ${
             versions.length === 0
@@ -766,6 +857,7 @@ function renderOutputPanel(panelEl: HTMLElement, config: MerchantConfig, merchan
           `
           }
         `
+                  : renderLocalesTab(config.merchant.tenantId, merchantId)
         }
       </div>
     </div>
@@ -777,6 +869,16 @@ function renderOutputPanel(panelEl: HTMLElement, config: MerchantConfig, merchan
       activeOutputTab = btn.dataset.outputTab as OutputTab;
       renderOutputPanel(panelEl, config, merchantId);
     });
+  });
+
+  // Locale selectors
+  panelEl.querySelector<HTMLSelectElement>('#locale-section-select')?.addEventListener('change', (e) => {
+    localeSection = (e.target as HTMLSelectElement).value;
+    renderOutputPanel(panelEl, config, merchantId);
+  });
+  panelEl.querySelector<HTMLSelectElement>('#locale-lang-select')?.addEventListener('change', (e) => {
+    localeLanguage = (e.target as HTMLSelectElement).value;
+    renderOutputPanel(panelEl, config, merchantId);
   });
 
   // Copy JSON
@@ -881,6 +983,12 @@ export function renderAppConfig(container: HTMLElement): void {
               <button class="btn btn-ghost" id="export-btn" style="font-size: 12px; padding: 6px 12px;">Export</button>
               <button class="btn btn-primary" id="publish-btn" style="font-size: 12px; padding: 6px 14px;" ${!isDirty && activeVersion ? 'disabled style="opacity: 0.5;"' : ''}>Publish</button>
             </div>
+          </div>
+
+          <!-- App selector -->
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+            <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap">App</span>
+            ${renderAppSelector()}
           </div>
 
           <!-- Section: Merchant Theme -->
@@ -1596,6 +1704,15 @@ export function renderAppConfig(container: HTMLElement): void {
     });
 
     // Header action buttons
+    // App selector
+    container.querySelectorAll<HTMLButtonElement>('button[data-app-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeAppId = btn.dataset.appId!;
+        activeOutputTab = 'locales';
+        build();
+      });
+    });
+
     container.querySelector('#publish-btn')?.addEventListener('click', () => {
       store.publishConfig(activeMerchantId!);
       activeOutputTab = 'history';

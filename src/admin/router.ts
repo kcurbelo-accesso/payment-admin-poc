@@ -1,11 +1,12 @@
-export type Route = '#/dashboard' | '#/merchants' | '#/app-config' | '#/logs' | '#/releases';
+export type Route = '#/dashboard' | '#/merchants' | '#/app-config' | '#/logs' | '#/releases' | '#/version-activity';
 
 export const ROUTES: { route: Route; label: string; icon: string }[] = [
-  { route: '#/dashboard', label: 'Dashboard', icon: '▦' },
-  { route: '#/merchants', label: 'Merchants', icon: '⬡' },
-  { route: '#/app-config', label: 'App Config', icon: '⚙' },
-  { route: '#/logs', label: 'Logs', icon: '≡' },
-  { route: '#/releases', label: 'Releases', icon: '⬆' },
+  { route: '#/dashboard',        label: 'Dashboard',        icon: '▦' },
+  { route: '#/merchants',        label: 'Merchants',        icon: '⬡' },
+  { route: '#/app-config',       label: 'App Config',       icon: '⚙' },
+  { route: '#/logs',             label: 'Logs',             icon: '≡' },
+  { route: '#/version-activity', label: 'Version Activity', icon: '◎' },
+  { route: '#/releases',         label: 'Releases',         icon: '⬆' },
 ];
 
 export function getRoute(): Route {

@@ -3,6 +3,7 @@ import { renderDashboard } from '../pages/dashboard';
 import { renderLogs } from '../pages/logs';
 import { renderMerchants } from '../pages/merchants';
 import { renderReleases } from '../pages/releases';
+import { renderVersionActivity } from '../pages/version-activity';
 import { getRoute, onRouteChange } from '../router';
 import { store } from '../services/store';
 import { renderSidebar } from './sidebar';
@@ -70,6 +71,9 @@ function renderContent(route: string, contentEl: HTMLElement): void {
       break;
     case '#/releases':
       renderReleases(contentEl);
+      break;
+    case '#/version-activity':
+      renderVersionActivity(contentEl);
       break;
     default:
       renderDashboard(contentEl);
