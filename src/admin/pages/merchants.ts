@@ -1,4 +1,6 @@
 import { MOCK_MERCHANTS, getMerchantsForTenant, getMerchantById, getTenantsForStack, getStackById } from '../data/mock';
+import { getMerchantVersionSummary, releaseVersionToNginxPath } from '../data/mockNginxLogs';
+import { SCHEMA_RELEASES } from '../data/releases';
 import { store } from '../services/store';
 import { navigate } from '../router';
 import { createMerchant } from '../services/api';
@@ -37,6 +39,10 @@ export function renderMerchants(container: HTMLElement): void {
       ? 'All Tenants'
       : (stackTenants.find((t) => t.id === activeTenantId)?.name ?? activeTenantId);
 
+    // Look up a SchemaRelease by its nginx path version (e.g. '1.3' → release '1.3.0')
+    const getReleaseForVersion = (nixVer: string) =>
+      SCHEMA_RELEASES.find((r) => releaseVersionToNginxPath(r.version) === nixVer);
+
     // Matrix cell helpers — defined outside the template to avoid nested backtick issues
     const mxOn = (color: string, title: string) =>
       '<span title="' + title + '" style="color:' + color + ';font-size:15px;line-height:1;cursor:default;">✓</span>';
@@ -44,7 +50,12 @@ export function renderMerchants(container: HTMLElement): void {
 
     const mxVersion = (ver: string) => {
       const c = versionColor(ver);
-      return '<span style="font-size:10px;font-family:monospace;font-weight:700;color:' + c + ';background:' + c + '18;padding:2px 7px;border-radius:99px;border:1px solid ' + c + '33;">v' + ver + '</span>';
+      const release = getReleaseForVersion(ver);
+      const tooltip = release ? 'v' + release.version + ' — ' + release.title : 'v' + ver;
+      return '<div style="display:flex;flex-direction:column;align-items:center;gap:2px">'
+        + '<span title="' + tooltip + '" style="font-size:10px;font-family:monospace;font-weight:700;color:' + c + ';background:' + c + '18;padding:2px 7px;border-radius:99px;border:1px solid ' + c + '33;cursor:default;">v' + ver + '</span>'
+        + (release ? '<span style="font-size:9px;color:#94a3b8;white-space:nowrap;max-width:90px;overflow:hidden;text-overflow:ellipsis;" title="' + release.title + '">' + release.title + '</span>' : '')
+        + '</div>';
     };
 
     container.innerHTML = `
@@ -133,6 +144,10 @@ export function renderMerchants(container: HTMLElement): void {
                       const isDirtyThis = isSelected && state.isDirty;
                       const activeVersion = store.getActiveVersion(m.id);
                       const statusBadge = m.status === 'active' ? 'badge-active' : m.status === 'pending' ? 'badge-pending' : 'badge-inactive';
+                      const liveSummary = getMerchantVersionSummary(m.id)[0] ?? null;
+                      const liveVersion = liveSummary?.version ?? null;
+                      const liveIsActive = liveSummary ? (Date.now() - new Date(liveSummary.lastSeen).getTime()) / 86400000 <= 7 : false;
+                      const liveRelease = liveVersion ? getReleaseForVersion(liveVersion) : null;
 
                       return `
                         <div data-merchant-id="${m.id}" style="
@@ -159,6 +174,12 @@ export function renderMerchants(container: HTMLElement): void {
                           <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap;">
                             <span class="badge ${statusBadge}">${m.status.charAt(0).toUpperCase() + m.status.slice(1)}</span>
                             ${isDirtyThis ? '<span style="background:#fef3c7;color:#b45309;font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;border:1px solid #fde68a;">DRAFT</span>' : ''}
+                            ${liveVersion
+                              ? '<span style="font-size:10px;font-family:monospace;font-weight:700;padding:2px 7px;border-radius:99px;border:1px solid '
+                                + (liveIsActive ? '#86efac;background:#dcfce7;color:#15803d' : '#e2e8f0;background:#f1f5f9;color:#64748b')
+                                + '">v' + liveVersion + '</span>'
+                                + (liveRelease ? '<span style="font-size:11px;color:#64748b;font-weight:500">' + liveRelease.title + '</span>' : '')
+                              : '<span style="font-size:10px;color:#cbd5e1;font-style:italic">no traffic</span>'}
                             ${activeVersion ? `<span style="font-size: 11px; color: #94a3b8; font-weight: 500;">${activeVersion.label}</span>` : ''}
                           </div>
 
@@ -254,7 +275,7 @@ export function renderMerchants(container: HTMLElement): void {
                         return [
                           '<tr data-matrix-merchant="' + m.id + '" style="cursor:pointer;background:' + rowBg + ';' + (isSelected ? 'outline:2px solid #3b82f6;outline-offset:-2px;' : '') + '">',
                           '<td style="padding:10px 16px;"><div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,' + cfg.merchant.theme.primaryColor + ',' + cfg.merchant.theme.secondaryColor + ');"></div><div><div style="font-size:13px;font-weight:600;color:#0f172a;">' + m.name + '</div><div style="font-size:10px;font-family:monospace;color:#94a3b8;">' + m.id + '</div></div></div></td>',
-                          '<td ' + cell(rowBg) + '>' + mxVersion(cfg.version) + '</td>',
+                          '<td ' + cell(rowBg) + '>' + mxVersion(releaseVersionToNginxPath(cfg.version)) + '</td>',
                           '<td ' + cell(rowBg, 'border-left:1px solid #f1f5f9;') + '>' + (hasInsurance  ? mxOn('#15803d', 'Insurance page enabled')  : mxOff()) + '</td>',
                           '<td ' + cell(rowBg) + '>'                              + (hasPayMonthly ? mxOn('#15803d', 'Pay Monthly page enabled') : mxOff()) + '</td>',
                           '<td ' + cell(rowBg, 'border-left:1px solid #f1f5f9;') + '>' + (hasAPL ? mxOn('#374151', 'Apple Pay')               : mxOff()) + '</td>',
